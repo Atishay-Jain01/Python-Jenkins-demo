@@ -36,7 +36,7 @@ pipeline {
          
                     bat 'az webapp config set --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --startup-file "gunicorn --bind=0.0.0.0 --timeout 600 app:app"'
                     bat  'powershell Compress-Archive -Path ./* -DestinationPath ./deploy.zip" -Force'
-                    bat 'dir ./deploy.zip'
+                    bat "dir \"%cd%\\deploy.zip\""
                     bat 'az webapp deployment source config-zip --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --src ./deploy.zip --timeout 1800'
                 }
             }
