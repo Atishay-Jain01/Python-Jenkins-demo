@@ -39,7 +39,7 @@ pipeline {
                     bat "powershell Compress-Archive -Path ./* -DestinationPath ./deploy.zip -Force"
                     
                     // Deploy the package
-                    bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./deploy.zip --type zip --timeout 1800"
+                    bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./deploy.zip"
                 }
             }
         }
