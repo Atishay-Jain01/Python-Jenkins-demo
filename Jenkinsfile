@@ -5,7 +5,7 @@ pipeline {
         AZURE_CREDENTIALS_ID = 'azure-service-principal-demo1'
         RESOURCE_GROUP = 'python-jenkins-rg'
         APP_SERVICE_NAME = 'python-jenkins-webapp-service'
-        PYTHON_VERSION = '3.12'
+        PYTHON_VERSION = '3.12.8'
         PYTHON_PATH = 'C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312\\python'
     }
     
