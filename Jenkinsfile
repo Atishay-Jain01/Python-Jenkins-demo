@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        AZURE_CREDENTIALS_ID = 'azure-service-principal'
+        AZURE_CREDENTIALS_ID = 'azure-service-principal-demo1'
         RESOURCE_GROUP = 'python-jenkins-rg'
         APP_SERVICE_NAME = 'python-jenkins-webapp-service'
         PYTHON_VERSION = '3.12'
