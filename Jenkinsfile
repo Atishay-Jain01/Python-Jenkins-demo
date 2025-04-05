@@ -7,7 +7,7 @@ pipeline {
         APP_SERVICE_NAME = 'python-jenkins-webapp-service'
         PYTHON_VERSION = '3.12'
         PYTHON_PATH = 'C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312\\python'
-        AZ_PATH = 'C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin\\az'
+        AZ_PATH = 'C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin'
     }
     
     stages {
