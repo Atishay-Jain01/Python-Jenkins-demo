@@ -99,21 +99,26 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat '''
-                        set PATH=%AZ_CLI_PATH%;%PATH%
-                        set PYTHONHOME=
-                        set PYTHONPATH=
+                    bat 'set PATH=%AZ_CLI_PATH%;%PATH%'
+                    bat 'set PYTHONHOME='
+                    bat 'set PYTHONPATH='
+                    bat 'az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"'
+                    bat 'az account show' // Optional: Check if login was successful and which subscription is active
 
-                        az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"
-                        az group create --name %RESOURCE_GROUP% --location eastus
-                        az appservice plan create --name %APP_SERVICE_NAME%-plan --resource-group %RESOURCE_GROUP% --sku B1 --is-linux
-                        az webapp create --resource-group %RESOURCE_GROUP% --plan %APP_SERVICE_NAME%-plan --name %APP_SERVICE_NAME% --runtime "PYTHON|%PYTHON_VERSION%"
-                        az webapp config set --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --startup-file "gunicorn --bind=0.0.0.0 --timeout 600 app:app"
+                    bat 'az group create --name %RESOURCE_GROUP% --location eastus'
+                    bat 'az group show --name %RESOURCE_GROUP%' // Check resource group created
 
-                        powershell Compress-Archive -Path ./* -DestinationPath ./deploy.zip -Force
-                        dir "%cd%\\deploy.zip"
-                        az webapp deploy --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --src-path ./deploy.zip --type zip
-                    '''
+                    bat 'az appservice plan create --name %APP_SERVICE_NAME%-plan --resource-group %RESOURCE_GROUP% --sku B1 --is-linux'
+                    bat 'az appservice plan show --name %APP_SERVICE_NAME%-plan --resource-group %RESOURCE_GROUP%' // Confirm plan
+
+                    bat 'az webapp create --resource-group %RESOURCE_GROUP% --plan %APP_SERVICE_NAME%-plan --name %APP_SERVICE_NAME% --runtime "PYTHON|%PYTHON_VERSION%"'
+                    bat 'az webapp show --name %APP_SERVICE_NAME% --resource-group %RESOURCE_GROUP%' // Confirm web app
+
+                    bat 'az webapp config set --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --startup-file "gunicorn --bind=0.0.0.0 --timeout 600 app:app"'
+
+                    bat 'powershell Compress-Archive -Path ./* -DestinationPath ./deploy.zip -Force'
+                    bat 'dir "%cd%\\deploy.zip"'
+                    bat 'az webapp deploy --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --src-path ./deploy.zip --type zip'
                 }
             }
         }
