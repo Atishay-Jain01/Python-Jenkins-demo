@@ -7,7 +7,7 @@ pipeline {
         APP_SERVICE_NAME = 'python-jenkins-webapp-service'
         PYTHON_VERSION = '3.12'
         PYTHON_PATH = 'C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python312\\python'
-        AZ_PATH = 'C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin'
+        AZ_CLI_PATH = 'C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin'
     }
     
     stages {
@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat 'set PATH=%AZ_PATH%;%PATH%'
+                    bat 'set PATH=%AZ_CLI_PATH%;%PATH%'
                     bat 'az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"'
                     bat 'az group create --name %RESOURCE_GROUP% --location eastus'
                     bat 'az appservice plan create --name %APP_SERVICE_NAME%-plan --resource-group %RESOURCE_GROUP% --sku B1 --is-linux'
