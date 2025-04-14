@@ -109,7 +109,7 @@ pipeline {
                         set PYTHONHOME=
                         set PYTHONPATH=
 
-                        powershell Compress-Archive -Path ./* -DestinationPath ./deploy.zip -Force
+                        "%PYTHON_PATH%" -c "import shutil; shutil.make_archive('deploy', 'zip', '.')"
                         dir "%cd%\\deploy.zip"
                         az webapp deploy --resource-group %RESOURCE_GROUP% --name %APP_SERVICE_NAME% --src-path ./deploy.zip --type zip
                     '''
