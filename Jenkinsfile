@@ -102,8 +102,8 @@ pipeline {
                     bat 'set PATH=%AZ_CLI_PATH%;%PATH%'
                     bat 'set PYTHONHOME='
                     bat 'set PYTHONPATH='
-                    bat 'az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"'
-                    bat 'az account show' // Optional: Check if login was successful and which subscription is active
+                    // bat 'az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"'
+                    // bat 'az account show' // Optional: Check if login was successful and which subscription is active
 
                     bat 'az group create --name %RESOURCE_GROUP% --location eastus'
                     bat 'az group show --name %RESOURCE_GROUP%' // Check resource group created
