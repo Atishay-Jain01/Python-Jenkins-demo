@@ -99,7 +99,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat 'set PATH=%AZ_CLI_PATH%;%PATH%'
+                    bat 'set PATH=%AZ_CLI_PATH%;%AZ_CLI_PATH%'
                     bat 'set PYTHONHOME='
                     bat 'set PYTHONPATH='
                     // bat 'az login --service-principal -u "%AZURE_CLIENT_ID%" -p "%AZURE_CLIENT_SECRET%" --tenant "%AZURE_TENANT_ID%"'
