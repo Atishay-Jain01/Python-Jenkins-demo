@@ -27,17 +27,6 @@ pipeline {
             }
         }
 
-        stage('Debug az') {
-            steps {
-                bat '''
-                    set PATH=C:\\Program Files\\Microsoft SDKs\\Azure\\CLI2\\wbin;%AZ_CLI_PATH%
-                    echo PATH is: %AZ_CLI_PATH%
-                    where az
-                    az.cmd --version
-                '''
-            }
-        }
-
         
         stage('Deploy') {
             steps {
